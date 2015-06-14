@@ -18,4 +18,4 @@ chown vagrant: ~vagrant/.zshrc
 chsh -s /bin/zsh vagrant
 
 git clone https://github.com/creationix/nvm.git ~vagrant/.nvm && cd ~vagrant/.nvm && git checkout `git describe --abbrev=0 --tags`
-source ~vagrant/.nvm/nvm.sh
+. ~vagrant/.nvm/nvm.sh
