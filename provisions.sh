@@ -23,4 +23,4 @@ echo ". ~/.nvm/nvm.sh" >> ~vagrant/.zshrc
 chown vagrant: ~vagrant/.nvm
 . ~vagrant/.nvm/nvm.sh
 nvm install 0.12
-echo "nvm use 0.12"
+echo "nvm use 0.12" >> ~vagrant/.zshrc
