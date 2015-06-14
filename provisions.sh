@@ -21,5 +21,6 @@ chsh -s /bin/zsh vagrant
 git clone https://github.com/creationix/nvm.git ~vagrant/.nvm && cd ~vagrant/.nvm && git checkout `git describe --abbrev=0 --tags`
 echo ". ~/.nvm/nvm.sh" >> ~vagrant/.zshrc
 chown vagrant: ~vagrant/.nvm
+. ~vagrant/.nvm/nvm.sh
 nvm install 0.12
 echo "nvm use 0.12"
