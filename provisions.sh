@@ -17,5 +17,5 @@ cp ~vagrant/.oh-my-zsh/templates/zshrc.zsh-template ~vagrant/.zshrc
 chown vagrant: ~vagrant/.zshrc
 chsh -s /bin/zsh vagrant
 
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | zsh
-source ~/.nvm/nvm.sh
+git clone https://github.com/creationix/nvm.git ~vagrant/.nvm && cd ~vagrant/.nvm && git checkout `git describe --abbrev=0 --tags`
+source ~vagrant/.nvm/nvm.sh
