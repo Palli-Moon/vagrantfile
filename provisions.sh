@@ -7,7 +7,7 @@ echo "         by Palli Moon          "
 echo "********************************"
 
 apt-get update -q
-apt-get install -yq git g++ zsh
+apt-get install -yq git g++ zsh sl
 
 # Install zsh with oh my zsh
 if [ ! -d ~vagrant/.oh-my-zsh ]; then
@@ -17,10 +17,5 @@ cp ~vagrant/.oh-my-zsh/templates/zshrc.zsh-template ~vagrant/.zshrc
 chown vagrant: ~vagrant/.zshrc
 chsh -s /bin/zsh vagrant
 
-# Install nvm and node
-git clone https://github.com/creationix/nvm.git ~vagrant/.nvm && cd ~vagrant/.nvm && git checkout `git describe --abbrev=0 --tags`
-echo ". ~/.nvm/nvm.sh" >> ~vagrant/.zshrc
-chown vagrant: ~vagrant/.nvm
-. ~vagrant/.nvm/nvm.sh
-nvm install 0.12
-echo "nvm use 0.12" >> ~vagrant/.zshrc
+# Clone dotfiles repository into user directory
+git clone https://github.com/Palli-Moon/dotfiles.git ~vagrant/dotfiles
