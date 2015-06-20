@@ -6,9 +6,9 @@ echo "    Ubuntu Trusty Tahr 64bit    "
 echo "         by Palli Moon          "
 echo "********************************"
 
-udo add-apt-repository ppa:djcj/screenfetch
-apt-get update -q
-apt-get install -yq git g++ zsh sl tree screenfetch
+add-apt-repository ppa:djcj/screenfetch
+apt-get update
+apt-get install -y git g++ zsh sl tree screenfetch
 
 # Install zsh with oh my zsh
 if [ ! -d ~vagrant/.oh-my-zsh ]; then
