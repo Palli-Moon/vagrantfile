@@ -23,5 +23,5 @@ git clone https://github.com/Palli-Moon/dotfiles.git ~vagrant/dotfiles
 
 
 # Run screenfetch on startup/ssh
-echo "\n\n\n" >> ~vagrant/.zshrc
+echo "echo \"\n\n\n\"" >> ~vagrant/.zshrc
 echo "if [ -f /usr/bin/screenfetch ]; then screenfetch; fi" >> ~vagrant/.zshrc
