@@ -7,7 +7,7 @@ echo "         by Palli Moon          "
 echo "********************************"
 
 apt-get update -q
-apt-get install -yq git g++ zsh sl
+apt-get install -yq git g++ zsh sl tree
 
 # Install zsh with oh my zsh
 if [ ! -d ~vagrant/.oh-my-zsh ]; then
