@@ -6,8 +6,9 @@ echo "    Ubuntu Trusty Tahr 64bit    "
 echo "         by Palli Moon          "
 echo "********************************"
 
+udo add-apt-repository ppa:djcj/screenfetch
 apt-get update -q
-apt-get install -yq git g++ zsh sl tree
+apt-get install -yq git g++ zsh sl tree screenfetch
 
 # Install zsh with oh my zsh
 if [ ! -d ~vagrant/.oh-my-zsh ]; then
@@ -19,3 +20,8 @@ chsh -s /bin/zsh vagrant
 
 # Clone dotfiles repository into user directory
 git clone https://github.com/Palli-Moon/dotfiles.git ~vagrant/dotfiles
+
+
+# Run screenfetch on startup/ssh
+echo "\n\n\n" >> ~vagrant/.zshrc
+echo "if [ -f /usr/bin/screenfetch ]; then screenfetch; fi" >> ~vagrant/.zshrc
