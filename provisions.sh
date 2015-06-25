@@ -8,7 +8,7 @@ echo "********************************"
 
 add-apt-repository ppa:djcj/screenfetch
 apt-get update
-apt-get install -y git g++ zsh sl tree screenfetch
+apt-get install -y git g++ zsh sl tree screenfetch keychain
 
 # Install zsh with oh my zsh
 if [ ! -d ~vagrant/.oh-my-zsh ]; then
@@ -21,7 +21,10 @@ chsh -s /bin/zsh vagrant
 # Clone dotfiles repository into user directory
 git clone https://github.com/Palli-Moon/dotfiles.git ~vagrant/dotfiles
 
-
 # Run screenfetch on startup/ssh
-echo "echo \"\n\n\n\"" >> ~vagrant/.zshrc
-echo "if [ -f /usr/bin/screenfetch ]; then screenfetch; fi" >> ~vagrant/.zshrc
+#echo "clear" >> ~vagrant/.zshrc
+#echo "if [ -f /usr/bin/screenfetch ]; then screenfetch; fi" >> ~vagrant/.zshrc
+#echo "echo \n\n" >> ~vagrant/.zshrc
+
+# Start keychain on ssh
+echo 'eval `keychain --eval --agents ssh id_rsa id_dsa`' >> ~vagrant/.zshrc
