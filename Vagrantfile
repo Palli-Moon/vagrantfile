@@ -8,7 +8,7 @@
 Vagrant.configure(2) do |config|
   # Box version
   config.vm.box = "ubuntu/trusty64"
-  
+    
   # Disables box update check, not recommended
   # config.vm.box_check_update = false
   
@@ -22,24 +22,19 @@ Vagrant.configure(2) do |config|
   # config.vm.network "public_network"
   
   # Sync guest folders with host folders
-  config.vm.synced_folder "D:\\Users\\Palli\\Documents\\www", "/home/vagrant/www"
-  config.vm.synced_folder "D:\\Users\\Palli\\Documents\\code", "/home/vagrant/code"
+  config.vm.synced_folder "../../www", "/home/vagrant/www"
+  config.vm.synced_folder "../../code", "/home/vagrant/code"
   
   # Copy ssh key to guest
   if Vagrant::Util::Platform.windows?
-    if File.exists?(File.join(Dir.home, ".ssh", "id_rsa"))
-        ssh_key = File.read(File.join(Dir.home, ".ssh", "id_rsa"))
-        config.vm.provision :shell, :inline => "echo 'Copying local SSH Key to VM for provisioning...' && mkdir -p ~vagrant/.ssh && echo '#{ssh_key}' > ~vagrant/.ssh/id_rsa && chmod 600 ~vagrant/.ssh/id_rsa && chown vagrant ~vagrant/.ssh/id_rsa"
+    if File.exists?(File.join(Dir.home, ".ssh", "id_rsa")) && File.exists?(File.join(Dir.home, ".ssh", "id_rsa.pub"))
+        private_key = File.read(File.join(Dir.home, ".ssh", "id_rsa"))
+		public_key = File.read(File.join(Dir.home, ".ssh", "id_rsa.pub"))
+        config.vm.provision "shell", inline: "echo 'Copying local private SSH Key to VM for provisioning...' && mkdir -p ~vagrant/.ssh && echo '#{private_key}' > ~vagrant/.ssh/id_rsa && chmod 600 ~vagrant/.ssh/id_rsa && chown vagrant ~vagrant/.ssh/id_rsa"
+		config.vm.provision "shell", inline: "echo 'Copying local public SSH Key to VM for provisioning...' && mkdir -p ~vagrant/.ssh && echo '#{public_key}' > ~vagrant/.ssh/id_rsa.pub && chmod 600 ~vagrant/.ssh/id_rsa.pub && chown vagrant ~vagrant/.ssh/id_rsa.pub"
     else
         # Else, throw a Vagrant Error. Cannot successfully startup on Windows without a SSH Key!
-        raise Vagrant::Errors::VagrantError, "\n\nERROR: SSH Key not found at ~/.ssh/id_rsa.\n\n"
-    end
-	if File.exists?(File.join(Dir.home, ".ssh", "id_rsa.pub"))
-        ssh_key = File.read(File.join(Dir.home, ".ssh", "id_rsa.pub"))
-        config.vm.provision :shell, :inline => "echo 'Copying local SSH Key to VM for provisioning...' && mkdir -p ~vagrant/.ssh && echo '#{ssh_key}' > ~vagrant/.ssh/id_rsa.pub && chmod 600 ~vagrant/.ssh/id_rsa.pub && chown vagrant ~vagrant/.ssh/id_rsa.pub"
-    else
-        # Else, throw a Vagrant Error. Cannot successfully startup on Windows without a SSH Key!
-        raise Vagrant::Errors::VagrantError, "\n\nERROR: PUBLIC SSH Key not found at ~/.ssh/id_rsa.pub.\n\n"
+        raise Vagrant::Errors::VagrantError, "\n\nERROR: SSH Key not found at ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub.\n\n"
     end
   end
   
