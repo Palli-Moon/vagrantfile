@@ -8,6 +8,10 @@
 Vagrant.configure(2) do |config|
   # Box version
   config.vm.box = "ubuntu/trusty64"
+
+  # Attempt to use ssh key
+  config.ssh.insert_key = false
+  config.ssh.private_key_path = File.expand_path('~/.vagrant.d/insecure_private_key')
     
   # Disables box update check, not recommended
   # config.vm.box_check_update = false
