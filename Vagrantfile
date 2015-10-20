@@ -8,6 +8,11 @@
 Vagrant.configure(2) do |config|
   # Box version
   config.vm.box = "ubuntu/trusty64"
+  
+  # Virtual box config
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+  end
 
   # Attempt to use ssh key
   config.ssh.insert_key = false
