@@ -11,10 +11,11 @@ Vagrant.configure(2) do |config|
   
   # Virtual box config
   config.vm.provider "virtualbox" do |v|
-    v.memory = 1024
+    v.memory = 2048
   end
+ 
 
-  # Attempt to use ssh key
+  # Use ssh key
   config.ssh.insert_key = false
   config.ssh.private_key_path = File.expand_path('~/.vagrant.d/insecure_private_key')
     
@@ -51,4 +52,7 @@ Vagrant.configure(2) do |config|
   # Switch to second line if first link is not working
   # config.vm.provision "shell", path: "https://raw.githubusercontent.com/Palli-Moon/vagrantfile/master/provisions.sh"
   config.vm.provision "shell", path: "provisions.sh"
+  
+  # Install Docker
+  config.vm.provision "docker"
 end
