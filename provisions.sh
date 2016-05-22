@@ -6,7 +6,7 @@ echo "******************************************"
 
 add-apt-repository ppa:djcj/screenfetch
 apt-get update
-apt-get install -y git g++ zsh sl tree keychain
+apt-get install -y git g++ zsh sl tree keychain build-essential
 
 # Install zsh with oh my zsh
 if [ ! -d ~vagrant/.oh-my-zsh ]; then
