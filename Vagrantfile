@@ -70,6 +70,7 @@ Vagrant.configure(2) do |config|
   # Provision with Chef
   config.vm.provision "chef_solo" do |chef|
     chef.add_recipe "nodejs"
+    chef.add_recipe "nginx"
     chef.add_recipe "mongodb"
     
     chef.json = {
