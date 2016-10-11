@@ -6,7 +6,7 @@
 #---------------------------#
 
 # Install required plugins
-required_plugins = %w( vagrant-vbguest vagrant-berkshelf vagrant-omnibus )
+required_plugins = %w( vagrant-vbguest vagrant-winnfsd )
 required_plugins.each do |plugin|
   system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
 end
@@ -18,6 +18,7 @@ Vagrant.configure(2) do |config|
   # Virtual box config
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
+	v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
 
   # Use ssh key
@@ -32,13 +33,14 @@ Vagrant.configure(2) do |config|
   
   # Opens private network and set ip to 55.55.55.5
   config.vm.network "private_network", ip: "55.55.55.5"
+  config.vm.network "private_network", type: "dhcp"
   
   # Opens public network
   # config.vm.network "public_network"
   
   # Sync guest folders with host folders
-  config.vm.synced_folder "../../www", "/home/vagrant/www"
-  config.vm.synced_folder "../../code", "/home/vagrant/code"
+  config.vm.synced_folder "../../www", "/home/vagrant/www", type: "nfs"
+  config.vm.synced_folder "../../code", "/home/vagrant/code", type: "nfs"
   
   # Copy ssh key to guest
   if Vagrant::Util::Platform.windows?
@@ -56,30 +58,4 @@ Vagrant.configure(2) do |config|
   # Install provisions through script
   config.vm.provision "shell", path: "provisions.sh"
   # config.vm.provision "shell", path: "https://raw.githubusercontent.com/Palli-Moon/vagrantfile/master/provisions.sh"
-  
-  # Install Docker
-  config.vm.provision "docker"
-
-  # Workaround due to bug: https://github.com/chef/chef/issues/4948
-  config.omnibus.chef_version = '12.10.24'
-  
-  # Enable berkshelf
-  config.berkshelf.enabled = true
-  config.berkshelf.berksfile_path = "cookbooks/dev/Berksfile"
-
-  # Provision with Chef
-  config.vm.provision "chef_solo" do |chef|
-    chef.add_recipe "nodejs"
-    chef.add_recipe "mongodb"
-    
-    chef.json = {
-      "nodejs" => {
-        "install_method" => "binary",
-        "binary" => {
-          "checksum" => "ab28c6af235045def1f65fca7f4848de3c2de4fb62ebce37052f1a10f0b40263"
-        },
-        "version" => "6.2.0"
-      }
-    }
-  end
 end
